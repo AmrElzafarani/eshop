@@ -17,6 +17,7 @@ import { OrdersModule } from '@eshop/orders';
 import { MessagesComponent } from './shared/messages/messages.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { UsersModule } from '@eshop/users';
 
 
 
@@ -45,7 +46,8 @@ const routes: Routes = [
     ProductsModule,
     UiModule,
     OrdersModule,
-    ToastModule
+    ToastModule,
+    UsersModule
 
   ],
    

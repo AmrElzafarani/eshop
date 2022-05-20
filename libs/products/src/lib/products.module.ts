@@ -41,7 +41,6 @@ const routes: Routes = [
     RatingModule,
     InputNumberModule,
     UiModule
-
   ],
   declarations: [
     ProductsSearchComponent,

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsService } from '@eshop/products';
 import { CartService } from '../../services/cart.service';
-import { OrdersService } from '../../services/orders.service';
 
 @Component({
   selector: 'orders-order-summary',

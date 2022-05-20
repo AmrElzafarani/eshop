@@ -17,9 +17,14 @@ export class UsersListComponent implements OnInit {
     this._getUsers();
   }
 
-  deleteUser(userId: string){}
+  deleteUser(userId: string){
+    console.log(userId)
+  }
 
-  updateUser(userId: string) {}
+  updateUser(userId: string) {
+    console.log(userId)
+
+  }
 
   private _getUsers() {
     this.usersService.getUsers().subscribe((users) => {

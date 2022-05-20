@@ -12,9 +12,6 @@ export class CartService {
 
   cart$: BehaviorSubject<Cart> = new BehaviorSubject(this.getCart())
 
-  constructor() { }
-
-  
   initCartLocalStorage() {
     const cart: Cart = this.getCart();
     if (!cart) {
@@ -24,6 +21,15 @@ export class CartService {
       const intialCartJson = JSON.stringify(intialCart);
       localStorage.setItem(CART_KEY, intialCartJson);
     }
+  }
+
+  emptyCart() {
+    const intialCart = {
+      items: []
+    }
+    const intialCartJson = JSON.stringify(intialCart);
+    localStorage.setItem(CART_KEY, intialCartJson);
+    this.cart$.next(intialCart)
   }
 
 
@@ -37,11 +43,11 @@ export class CartService {
   setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
     const cart: Cart = this.getCart();
     const cartItemExist = cart?.items?.find((item) => item.productId === cartItem.productId);
-    if(cartItemExist) {
+    if (cartItemExist) {
       cart.items.map((item) => {
-        if(item.productId === cartItem.productId) {
-          if(updateCartItem) {
-            item.quantity =  cartItem.quantity;
+        if (item.productId === cartItem.productId) {
+          if (updateCartItem) {
+            item.quantity = cartItem.quantity;
           } else {
             item.quantity = item.quantity + cartItem.quantity;
           }
@@ -71,14 +77,14 @@ export class CartService {
 
   }
 
-//   setCartItem(cartItem: CartItem): Cart {
-//     // const cart: Cart = JSON.parse(localStorage.getItem(CART_KEY) || '');
-//     const cart = this.getCart();
-//     cart?.items?.push(cartItem);
-//     const cartJson = JSON.stringify(cart);
-//     localStorage.setItem(CART_KEY, cartJson);
-//     return cart;
-// }
+  //   setCartItem(cartItem: CartItem): Cart {
+  //     // const cart: Cart = JSON.parse(localStorage.getItem(CART_KEY) || '');
+  //     const cart = this.getCart();
+  //     cart?.items?.push(cartItem);
+  //     const cartJson = JSON.stringify(cart);
+  //     localStorage.setItem(CART_KEY, cartJson);
+  //     return cart;
+  // }
 
 
 

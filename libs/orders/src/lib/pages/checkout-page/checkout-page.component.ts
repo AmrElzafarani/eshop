@@ -81,8 +81,8 @@ export class CheckoutPageComponent implements OnInit {
 
     this.ordersService.createOrder(order).subscribe(
       () => {
-        //Rediect to thank you page
-        // this.router.navigate(['/success'])
+        this.cartService.emptyCart();
+        this.router.navigate(['/success']);
       }
     )
   }

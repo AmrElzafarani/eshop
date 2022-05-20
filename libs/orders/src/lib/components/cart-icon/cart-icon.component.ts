@@ -18,7 +18,6 @@ export class CartIconComponent implements OnInit {
       this.cartCount = cart?.items.length ?? 0;
     })
     // this.cartCount = this.cartService.getCart().items.length;
-    console.log(typeof(this.cartCount))
   }
   
 

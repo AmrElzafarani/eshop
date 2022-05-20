@@ -36,9 +36,14 @@ export class UsersFormComponent implements OnInit {
     })
   }
 
-  onSubmit() {}
+  onSubmit() {
+    console.log("submit")
+  }
 
-  onCancel() {}
+  onCancel() {
+    console.log("cancel")
+
+  }
 
   get userForm() {
     return this.form.controls;

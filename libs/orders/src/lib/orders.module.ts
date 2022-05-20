@@ -13,6 +13,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
+import { ThankYouComponent } from './pages/thank-you/thank-you.component';
+import { AuthGuard } from '@eshop/users';
 
 export const routes: Routes = [
   {
@@ -21,7 +23,12 @@ export const routes: Routes = [
   },
   {
     path: 'checkout',
+    canActivate: [AuthGuard],
     component: CheckoutPageComponent
+  },
+  {
+    path: 'success',
+    component: ThankYouComponent
   }
 ];
 
@@ -42,7 +49,8 @@ export const routes: Routes = [
     CartIconComponent,
     CartPageComponent,
     OrderSummaryComponent,
-    CheckoutPageComponent
+    CheckoutPageComponent,
+    ThankYouComponent
   ],
   exports: [
     CartIconComponent,
