@@ -36,6 +36,10 @@ import { OrdersListComponent } from './pages/orders/orders-list/orders-list.comp
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import {NgxStripeModule} from 'ngx-stripe';
+
 
 const UX_MODULE = [
   CardModule,
@@ -74,12 +78,16 @@ const UX_MODULE = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+   StoreModule.forRoot({}),
+   EffectsModule.forRoot([]),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     UsersModule,
-    ...UX_MODULE
+    ...UX_MODULE,
+    NgxStripeModule.forRoot('pk_test_51L1vfBKyFUqEluimU5FSFgnGznbByFHlY1PCzFER2gMDD3KeMM56d5HsymWZ1VB0aSMYyJQ7HXeM5aX0mXDLnp5f00YiyRCjAA')
+
   ],
   providers: [
     CategoriesService,
