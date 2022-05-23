@@ -1,8 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@env/environment";
-import { map, Observable } from "rxjs";
+import { map, Observable, switchMap } from "rxjs";
 import { Order } from "../models/order";
+import { OrderItem } from "../models/order-item";
+import { StripeService } from 'ngx-stripe';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,7 @@ export class OrdersService {
   apiURLProducts = environment.apiURL + 'products';
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private stripeService: StripeService) { }
 
   //Get all Orders
   getOrders(): Observable<Order[]> {
@@ -51,6 +54,31 @@ export class OrdersService {
   //Get product by ID
   getproductById(productId: string): Observable<any> {
     return this.http.get<any>(`${this.apiURLProducts}/${productId}`)
+  }
+
+  //Get session Id for Payment
+  createCheckoutSession(orderItems: OrderItem[]) {
+    return this.http.post<any>(`${this.apiURLOrders}/create-checkout-session`, orderItems)
+      .pipe(switchMap((session: any) => {
+        return this.stripeService.redirectToCheckout({ sessionId: session.id })
+      }));
+  }
+
+  //Add Order in local storage
+  cacheOrderData(order: Order) {
+    localStorage.setItem('orderData', JSON.stringify(order));
+  }
+
+  //Get order from local storage
+  getCachedOrderData(): Order {
+    const orderDataJsonString: string = localStorage.getItem('orderData')|| '{}'
+    const orderData: Order = JSON.parse(orderDataJsonString)
+    return orderData
+  }
+
+  //Remove cached Data
+  removeCachedData() {
+    localStorage.removeItem('orderData');
   }
 
 }
