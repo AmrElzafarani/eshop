@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UsersService } from '@eshop/users';
 import { Cart } from '../../models/cart';
 import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
@@ -19,17 +20,19 @@ export class CheckoutPageComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private ordersService: OrdersService,
-    private cartService: CartService
+    private cartService: CartService,
+    private usersService: UsersService,
 
   ) { }
 
   checkoutFormGroup!: FormGroup;
   isSubmitted = false;
   orderItems: OrderItem[] = [];
-  userId = "62219e47aad388a77d6a7464";
+  userId!: string;
 
   ngOnInit(): void {
     this._initCheckoutForm();
+    this._autoFillUserData();
     this._getCartItems();
   }
 
@@ -43,6 +46,23 @@ export class CheckoutPageComponent implements OnInit {
       zip: [''],
       apartment: ['', Validators.required],
       street: ['', Validators.required]
+    });
+  }
+
+  private _autoFillUserData() {
+    this.usersService.observeCurrentUser().subscribe((user) => {
+      if (user) {
+        this.userId = user._id;
+        this.checkoutForm['name'].setValue(user?.name);
+        this.checkoutForm['email'].setValue(user?.email);
+        this.checkoutForm['phone'].setValue(user?.phone);
+        this.checkoutForm['city'].setValue(user?.city);
+        this.checkoutForm['street'].setValue(user?.street);
+        this.checkoutForm['country'].setValue(user?.country);
+        this.checkoutForm['zip'].setValue(user?.zip);
+        this.checkoutForm['apartment'].setValue(user?.apartment);
+
+      }
     });
   }
 
@@ -63,9 +83,10 @@ export class CheckoutPageComponent implements OnInit {
 
   placeOrder() {
     this.isSubmitted = true;
-    if(this.checkoutFormGroup.invalid) {
+    if (this.checkoutFormGroup.invalid) {
       return;
     }
+
     const order: Order = {
       orderItems: this.orderItems,
       shippingAddress1: this.checkoutForm['street'].value,
@@ -76,15 +97,17 @@ export class CheckoutPageComponent implements OnInit {
       phone: this.checkoutForm['phone'].value,
       // status: 0,
       user: this.userId,
-      dateOrdered: `${Date.now()}` 
+      dateOrdered: `${Date.now()}`
     };
 
-    this.ordersService.createOrder(order).subscribe(
-      () => {
-        this.cartService.emptyCart();
-        this.router.navigate(['/success']);
+    this.ordersService.cacheOrderData(order);
+
+    this.ordersService.createCheckoutSession(this.orderItems).subscribe(error => {
+      if (error) {
+        console.log("error in redirect to payment")
       }
-    )
+    });
+
   }
 
   get checkoutForm() {
