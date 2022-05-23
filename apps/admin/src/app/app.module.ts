@@ -38,7 +38,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import {NgxStripeModule} from 'ngx-stripe';
+import { NgxStripeModule } from 'ngx-stripe';
 
 
 const UX_MODULE = [
@@ -78,8 +78,8 @@ const UX_MODULE = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-   StoreModule.forRoot({}),
-   EffectsModule.forRoot([]),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -97,4 +97,4 @@ const UX_MODULE = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
