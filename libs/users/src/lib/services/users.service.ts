@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "@env/environment";
 import { map, Observable } from "rxjs";
 import { User } from "../models/user";
+import { UsersFacade } from "../state/users.facade";
 
 
 @Injectable({
@@ -11,7 +12,10 @@ import { User } from "../models/user";
 export class UsersService {
   apiURLUsers = environment.apiURL + 'users';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private usersFacade: UsersFacade
+  ) { }
 
   //Get Users
   getUsers(): Observable<User[]> {
@@ -19,7 +23,7 @@ export class UsersService {
   }
 
   //Get user by Id
-  getUserById(userId: string): Observable<User>{
+  getUserById(userId: string): Observable<User> {
     return this.http.get<User>(`${this.apiURLUsers}/${userId}`);
   }
 
@@ -29,8 +33,8 @@ export class UsersService {
   }
 
   //Update user
-  updateUser(user: User): Observable<User>{
-    return this.http.put<User>(`${this.apiURLUsers}/${user.id}`, user);
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiURLUsers}/${user._id}`, user);
   }
 
   //Delete user
@@ -43,5 +47,17 @@ export class UsersService {
     return this.http
       .get<number>(`${this.apiURLUsers}/get/count`)
       .pipe(map((objectValue: any) => objectValue.userCount));
+  }
+
+  initAppSession() {
+    this.usersFacade.buildUserSession();
+  }
+
+  observeCurrentUser() {
+    return this.usersFacade.currentUser$;
+  }
+
+  isCurrentUserAuth() {
+    return this.usersFacade.isAuthenticated$;
   }
 }
