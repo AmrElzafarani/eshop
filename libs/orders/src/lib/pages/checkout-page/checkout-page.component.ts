@@ -51,16 +51,17 @@ export class CheckoutPageComponent implements OnInit {
 
   private _autoFillUserData() {
     this.usersService.observeCurrentUser().subscribe((user) => {
+      console.log(user)
       if (user) {
         this.userId = user._id;
-        this.checkoutForm['name'].setValue(user?.name);
-        this.checkoutForm['email'].setValue(user?.email);
-        this.checkoutForm['phone'].setValue(user?.phone);
-        this.checkoutForm['city'].setValue(user?.city);
-        this.checkoutForm['street'].setValue(user?.street);
-        this.checkoutForm['country'].setValue(user?.country);
-        this.checkoutForm['zip'].setValue(user?.zip);
-        this.checkoutForm['apartment'].setValue(user?.apartment);
+        this.checkoutForm['name'].setValue(user.name);
+        this.checkoutForm['email'].setValue(user.email);
+        this.checkoutForm['phone'].setValue(user.phone);
+        this.checkoutForm['city'].setValue(user.city);
+        this.checkoutForm['street'].setValue(user.street);
+        this.checkoutForm['country'].setValue(user.country);
+        this.checkoutForm['zip'].setValue(user.zip);
+        this.checkoutForm['apartment'].setValue(user.apartment);
 
       }
     });
@@ -68,7 +69,6 @@ export class CheckoutPageComponent implements OnInit {
 
   private _getCartItems() {
     const cart: Cart = this.cartService.getCart();
-    console.log(cart)
     this.orderItems = cart.items.map((item) => {
       return {
         product: item.productId,
