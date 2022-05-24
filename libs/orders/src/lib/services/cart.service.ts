@@ -36,7 +36,6 @@ export class CartService {
 
   getCart(): Cart {
     const cartJsonString: string = (localStorage.getItem(CART_KEY)!);
-    console.log(cartJsonString);
     const cart: Cart = JSON.parse(cartJsonString);
     return cart;
 
