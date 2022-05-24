@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsService } from '@eshop/products';
 import { CartService } from '../../services/cart.service';
 import { CartItemDetailed } from '../../models/cart';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'orders-cart-page',
@@ -11,11 +10,10 @@ import { Subject, takeUntil } from 'rxjs';
   styles: [
   ]
 })
-export class CartPageComponent implements OnInit, OnDestroy {
+export class CartPageComponent implements OnInit {
 
   cartItemsDetailed: CartItemDetailed[] = []
   cartCount = 0;
-  endSubs$: Subject<any> = new Subject();
 
   constructor(
     private router: Router,
@@ -28,12 +26,10 @@ export class CartPageComponent implements OnInit, OnDestroy {
     console.log(this.cartItemsDetailed)
   }
 
-  ngOnDestroy() {
-    this.endSubs$.complete();
-  }
+
 
   private _getCartDetails() {
-    this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(resCart => {
+    this.cartService.cart$.subscribe(resCart => {
       this.cartItemsDetailed = [];
       this.cartCount = resCart?.items.length ?? 0;
       resCart.items.forEach(cartItem => {
