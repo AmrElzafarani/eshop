@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Cart } from '../models/cart';
@@ -34,7 +35,8 @@ export class CartService {
 
 
   getCart(): Cart {
-    const cartJsonString: string = (localStorage.getItem(CART_KEY));
+    const cartJsonString: string = (localStorage.getItem(CART_KEY)!);
+    console.log(cartJsonString);
     const cart: Cart = JSON.parse(cartJsonString);
     return cart;
 
