@@ -7,8 +7,7 @@ import { CartItemDetailed } from '../../models/cart';
 @Component({
   selector: 'orders-cart-page',
   templateUrl: './cart-page.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class CartPageComponent implements OnInit {
 

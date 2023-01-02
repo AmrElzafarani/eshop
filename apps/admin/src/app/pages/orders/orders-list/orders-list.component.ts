@@ -14,6 +14,10 @@ import { takeUntil } from 'rxjs/operators';
 export class OrdersListComponent implements OnInit, OnDestroy {
 
   orders: Order[] = [];
+  totalOrdersCount = 0;
+  ordersPerPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
   endSubscription$: Subject<any> = new Subject();
 
 
@@ -70,11 +74,19 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   //Get Orders
   private _getOrders() {
-    this.ordersService.getOrders()
+    this.ordersService.getOrders(this.ordersPerPage, this.currentPage)
       .pipe(takeUntil(this.endSubscription$))
       .subscribe((orders) => {
-        this.orders = orders
+        console.log(orders)
+        this.orders = orders.message
+        this.totalOrdersCount = orders.total
       })
+  }
+
+  handlePagination(pageData: any) {
+    this.currentPage = pageData.page + 1;
+    this.ordersPerPage = pageData.rows;
+    this._getOrders();
   }
 
 }

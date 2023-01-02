@@ -1,53 +1,79 @@
 .product {
-    &-name {
-      font-size: 2em;
-    }
-  
-    &-desc {
-      font-size: 1.4em;
-    }
-  
-    &-rating {
-      margin: 15px 0;
-    }
-  
-    &-price {
-      font-size: 2em;
-      font-weight: 600;
-      border-bottom: 1px solid var(--surface-300);
-      padding: 25px 0;
-  
-      .price-before {
-        font-size: 0.7em;
-        margin-left: 10px;
-        font-weight: 200;
-        color: var(--surface-500);
-        text-decoration: line-through;
-      }
-    }
-  
-    &-quantity {
-      margin: 25px 0;
-  
-      label {
-        font-size: 1.2em;
-      }
-  
-      .p-button {
-        background-color: $primary-color;
-        border: 0;
-      }
-    }
-  
-    &-actions {
-      .p-button {
-        background-color: $primary-color;
-        border: 0;
-      }
+  &-name {
+    font-size: calc(1.375rem + 1.5vw);
+    font-weight: bolder;
+    line-height: 1.2;
+    color: #212529;
+  }
+
+  &-info {
+    margin-left: 3%;
+  }
+
+  &-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: rgba(0, 0, 0, .5);
+  }
+
+  &-page {
+    padding-top: 3rem;
+  }
+
+  &-price {
+    font-size: 2em;
+    font-weight: 600;
+    color: #212529;
+
+    .price-before {
+      font-size: 0.7em;
+      margin-left: 10px;
+      font-weight: 200;
+      color: var(--surface-500);
+      text-decoration: line-through;
     }
   }
-  
-  .product-rich-desc {
-    line-height: 1.6;
+
+  &-quantity {
+    margin: 25px 0;
+
+    label {
+      font-size: 1.2em;
+    }
+
+    .p-button {
+      background-color: $primary-color;
+    }
   }
-  
+
+  &-action {
+    margin: 25px 0;
+
+    .p-button {
+      background-color: $primary-color;
+      border: 0;
+    }
+  }
+}
+
+.product-rich-desc {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, .5);
+}
+
+p-inputnumber {
+  -webkit-text-stroke-width: thick;
+}
+
+.p-inputtext {
+  text-align: center;
+  max-width: 5rem;
+}
+
+h2 {
+  font-size: calc(1.375rem + 1.5vw);
+  color: #212529;
+}

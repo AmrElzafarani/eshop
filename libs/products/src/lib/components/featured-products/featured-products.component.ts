@@ -20,6 +20,7 @@ export class FeaturedProductsComponent implements OnInit {
 
   private _getFeaturedProducts() {
     this.productService.getFeaturedProducts(4).subscribe((products) => {
+      console.log(products)
       this.featuredProducts = products
     })
   }

@@ -8,19 +8,25 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GalleryComponent implements OnInit {
 
-  selectedImageUrl!: string;
   @Input() images!: string[];
-
-  ngOnInit(): void {
-
-    if (this.hasImages) {
-      this.selectedImageUrl = this.images[0];
+  responsiveOptions = [
+    {
+        breakpoint: '1024px',
+        numVisible: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 1
     }
-  }
+];
+ 
+  ngOnInit(): void {}
 
-  changeSelectedImage(imageUrl: string) {
-    this.selectedImageUrl = imageUrl
-  }
+  
 
   get hasImages() {
     return this.images.length > 0;

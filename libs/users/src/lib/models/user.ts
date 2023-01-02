@@ -12,3 +12,8 @@ export interface User {
     city?: string;
     country?: string;
 }
+
+export interface UsersResponse {
+    message: User[];
+    total: number;
+}

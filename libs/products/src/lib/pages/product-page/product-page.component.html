@@ -1,38 +1,43 @@
 <div class="product-page" *ngIf="product">
-    <div class="grid">
-        <div class="col-6">
+    <div class="grid justify-content-center">
+        <div class="col-8 md:col-5">
             <ui-gallery [images]="product.images"></ui-gallery>
         </div>
-        <div class="col-6">
-            <h2>{{ product.name }}</h2>
+        <div class="col-8 md:col-5 product-info">
+            <h1 class="product-name">{{ product.name }}</h1>
             <p class="product-desc">
                 {{ product.description }}
             </p>
-            <div class="product-rating">
+            <!-- <div class="product-rating">
                 <p-rating [(ngModel)]="product.rating" [disabled]="true" [cancel]="false"></p-rating>
-            </div>
+            </div> -->
             <div class="product-price">
                 {{product.price}}
+                <span>LE</span>
                 <!-- <span class="price-before">{{product.price}}</span> -->
             </div>
-            <div class="product-quantity">
-                <div class="p-field col-12 p-md-3 p-0">
-                    <label for="quantity">Quantity</label>
-                    <div class="col-12 md-3 p-0">
-                        <p-inputNumber [(ngModel)]="quantity" mode="decimal" [showButtons]="true" inputId="quantity">
-                        </p-inputNumber>
+            <div class="grid">
+                <div class="product-quantity col-8 md:col-6">
+                    <div class="p-field">
+                        <!-- <label for="quantity">Quantity</label> -->
+                        <div class="p-0">
+                            <p-inputNumber [(ngModel)]="quantity" mode="decimal" [showButtons]="true" inputId="quantity"
+                                buttonLayout="horizontal" incrementButtonIcon="pi pi-plus"
+                                decrementButtonIcon="pi pi-minus">
+                            </p-inputNumber>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-action">
-                <button pButton pRipple type="button" label="Buy Now" class="p-button-rounded mr-2"></button>
-                <button pButton pRipple type="button" label="Add to Cart" class="p-button-rounded"
-                    (click)="addProductToCart()"></button>
+                <div class="product-action col-10 md:col-6">
+                    <!-- <button pButton pRipple type="button" label="Buy Now" class="p-button-rounded mr-2"></button> -->
+                    <button pButton pRipple type="button" label="Add to Cart" class="p-button-rounded"
+                        (click)="addProductToCart()"></button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="grid product-rich-desc">
-        <div class="col-12">
+    <div class="grid product-rich-desc justify-content-center">
+        <div class="col-8">
             <div [innerHTML]="product.richDescription"></div>
         </div>
     </div>

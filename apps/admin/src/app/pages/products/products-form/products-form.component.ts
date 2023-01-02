@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesService, Category, Product, ProductsService } from '@eshop/products';
+import { Brand, BrandsService, CategoriesService, Category, Material, MaterialsService, Product, ProductsService, Supplier, SuppliersService } from '@eshop/products';
 import { MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,15 +19,24 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   editMode = false;
   isSubmitted = false;
   categories: Category[] = [];
+  brands: Brand[] = [];
+  suppliers: Supplier[] = [];
+  materials: Material[] = [];
   imageDisplay: string | ArrayBuffer | undefined;
   currentProductId!: string;
   endSubscription$: Subject<any> = new Subject();
+
+  uploadedFiles: any[] = [];
+
 
 
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoriesService,
     private productService: ProductsService,
+    private brandsService: BrandsService,
+    private suppliersService: SuppliersService,
+    private matrialsService: MaterialsService,
     private messageService: MessageService,
     private route: ActivatedRoute
 
@@ -36,7 +45,9 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this._initForm();
-    this._getCategories();
+    // this._getCategories();
+    // this._getBrands();
+    // this._getSuppliers();
     this._checkEditMode();
   }
 
@@ -51,10 +62,12 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       brand: ['', Validators.required],
       price: ['', Validators.required],
       category: ['', Validators.required],
+      material: ['', Validators.required],
+      supplier: ['', Validators.required],
       countInStock: ['', Validators.required],
       description: ['', Validators.required],
       richDescription: [''],
-      image: ['', Validators.required],
+      image: [''],
       isFeatured: [false]
     })
   }
@@ -69,7 +82,9 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
           .subscribe(product => {
             this.productForm['name'].setValue(product.name);
             this.productForm['category'].setValue(product.category?._id);
-            this.productForm['brand'].setValue(product.brand);
+            this.productForm['brand'].setValue(product.brand?._id);
+            this.productForm['material'].setValue(product.material?._id);
+            this.productForm['supplier'].setValue(product.supplier?._id);
             this.productForm['price'].setValue(product.price);
             this.productForm['countInStock'].setValue(product.countInStock);
             this.productForm['isFeatured'].setValue(product.isFeatured);
@@ -109,28 +124,57 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     console.log("canceled")
   }
 
-  onImageUpload(event: any) {
-    const file = event.target.files[0];
-    console.log(file)
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image')?.updateValueAndValidity();
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        this.imageDisplay = fileReader.result as string;
-        console.log(fileReader.result)
-      }
-      fileReader.readAsDataURL(file);
-    }
+  searchByCategoryName(event:any) {
+    console.log(event)
+    this.categoryService.serachByCategoryName(event.query)
+    .subscribe(res => {
+      console.log(res.message)
+      this.categories = res.message
+    })
   }
 
-  //Get All Categories
-  private  _getCategories() {
-    return ( this.categoryService.getCategories())
-      .pipe(takeUntil(this.endSubscription$))
-      .subscribe(categories => {
-        this.categories = categories
-      })
+  searchBySupplierName(event:any) {
+    console.log(event)
+    this.suppliersService.serachBySupplierName(event.query)
+    .subscribe(res => {
+      console.log(res.message)
+      this.suppliers = res.message
+    })
+  }
+
+  searchByMaterialName(event:any) {
+    console.log(event)
+    this.matrialsService.searchByMaterialName(event.query)
+    .subscribe(res => {
+      console.log(res.message)
+      this.materials = res.message
+    })
+  }
+
+  searchByBrandName(event:any) {
+    console.log(event)
+    this.brandsService.serachByBrandName(event.query)
+    .subscribe(res => {
+      console.log(res.message)
+      this.brands = res.message
+    })
+  }
+
+  selectedCategory(e:any) {
+    console.log(this.productForm['category'].value._id)
+    this.productForm['category'].patchValue(e._id)
+  }
+
+  selectedBrand(e:any) {
+    this.productForm['brand'].patchValue(e._id)
+  }
+
+  selectedMaterial(e:any) {
+    this.productForm['material'].patchValue(e._id)
+  }
+
+  selectedSupplier(e:any) {
+    this.productForm['supplier'].patchValue(e._id)
   }
 
   //Create Product
@@ -176,6 +220,21 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
 
         }
       )
+  }
+
+  onImageUpload(event: any) {
+    const file = event.target.files[0];
+    console.log(file)
+    if (file) {
+      this.form.patchValue({ image: file });
+      this.form.get('image')?.updateValueAndValidity();
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.imageDisplay = fileReader.result as string;
+        // console.log(fileReader.result)
+      }
+      fileReader.readAsDataURL(file);
+    }
   }
 
   get productForm() {

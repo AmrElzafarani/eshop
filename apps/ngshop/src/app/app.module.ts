@@ -19,7 +19,12 @@ import { MessageService } from 'primeng/api';
 import { JwtInterceptor, UsersModule } from '@eshop/users';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import {NgxStripeModule} from 'ngx-stripe';
+import { NgxStripeModule } from 'ngx-stripe';
+import { MenubarModule } from 'primeng/menubar';
+import {CarouselModule} from 'primeng/carousel';
+
+
+
 
 
 
@@ -52,6 +57,8 @@ const routes: Routes = [
     OrdersModule,
     ToastModule,
     UsersModule,
+    MenubarModule,
+    CarouselModule,
     NgxStripeModule.forRoot('pk_test_51L1vfBKyFUqEluimU5FSFgnGznbByFHlY1PCzFER2gMDD3KeMM56d5HsymWZ1VB0aSMYyJQ7HXeM5aX0mXDLnp5f00YiyRCjAA')
 
   ],
@@ -66,4 +73,4 @@ const routes: Routes = [
     MessagesComponent
   ],
 })
-export class AppModule {}
+export class AppModule { }

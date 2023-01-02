@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@env/environment";
 import { map, Observable } from "rxjs";
-import { User } from "../models/user";
+import { User, UsersResponse } from "../models/user";
 import { UsersFacade } from "../state/users.facade";
 
 
@@ -18,8 +18,9 @@ export class UsersService {
   ) { }
 
   //Get Users
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiURLUsers);
+  getUsers(usersPerPage: number, currentPage: number): Observable<UsersResponse> {
+    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    return this.http.get<UsersResponse>(`${this.apiURLUsers}${queryParams}`);
   }
 
   //Get user by Id

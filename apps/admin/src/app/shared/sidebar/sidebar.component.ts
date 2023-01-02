@@ -9,6 +9,7 @@ import {sidebarData} from '../../shared/sidebar-data';
 export class SidebarComponent {
 
   items = sidebarData;
+  display = true;
 
   constructor(private authService: AuthService) { }
 

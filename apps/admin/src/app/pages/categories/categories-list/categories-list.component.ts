@@ -13,6 +13,10 @@ import { takeUntil } from 'rxjs/operators'
 export class CategoriesListComponent implements OnInit, OnDestroy {
 
   categories: Category[] = [];
+  totalCategoriesCount = 0;
+  categoriesPerPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [10, 20, 30];
   endSubscription$: Subject<any> = new Subject();
 
   constructor(
@@ -30,6 +34,12 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.endSubscription$.next;
     this.endSubscription$.complete();
+  }
+
+  handlePagination(pageData: any) {
+    this.currentPage = pageData.page + 1;
+    this.categoriesPerPage = pageData.rows
+    this.getCategories()
   }
 
   //Delete Category with confirmation dialog
@@ -75,10 +85,11 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
 
   private async getCategories() {
-    (await this.categoriesService.getCategories())
+    (await this.categoriesService.getCategories(this.categoriesPerPage, this.currentPage))
       .pipe(takeUntil(this.endSubscription$))
-      .subscribe(cats => {
-        this.categories = cats;
+      .subscribe(res => {
+        this.categories = res.message;
+        this.totalCategoriesCount = res.total
       })
   }
 

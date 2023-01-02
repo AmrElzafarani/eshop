@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category';
 import { CategoriesService } from '../../services/categories.service';
-import {HttpClient} from "@angular/common/http";
 
 
 @Component({
@@ -12,12 +11,30 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CategoriesBannerComponent implements OnInit {
 
-  categories: Category[] = [] 
+  categories: Category[] = [];
+  responsiveOptions; 
 
   constructor(
     private categoriesService: CategoriesService,
-    private http: HttpClient,
-    ) { }
+    ) { 
+      this.responsiveOptions = [
+        {
+            breakpoint: '1024px',
+            numVisible: 4,
+            numScroll: 4
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3,
+            numScroll: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 2,
+            numScroll: 2
+        }
+    ];
+    }
 
   ngOnInit(): void {
     
@@ -27,7 +44,7 @@ export class CategoriesBannerComponent implements OnInit {
 
   private  getCategories() {
      this.categoriesService.getCategories().subscribe(categories => {
-      this.categories = categories
+      this.categories = categories.message
     })
   }
 

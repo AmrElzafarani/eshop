@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "@env/environment";
 import { map, Observable, switchMap } from "rxjs";
-import { Order } from "../models/order";
+import { Order, OrdersResponse } from "../models/order";
 import { OrderItem } from "../models/order-item";
 import { StripeService } from 'ngx-stripe';
 
@@ -18,8 +18,9 @@ export class OrdersService {
   constructor(private http: HttpClient, private stripeService: StripeService) { }
 
   //Get all Orders
-  getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.apiURLOrders)
+  getOrders(ordersPerPage: number, currentPage: number): Observable<OrdersResponse> {
+    const queryParams = `?pagesize=${ordersPerPage}&page=${currentPage}`;
+    return this.http.get<OrdersResponse>(`${this.apiURLOrders}${queryParams}`)
   }
 
   //Get order by ID
@@ -71,7 +72,7 @@ export class OrdersService {
 
   //Get order from local storage
   getCachedOrderData(): Order {
-    const orderDataJsonString: string = localStorage.getItem('orderData')|| '{}'
+    const orderDataJsonString: string = localStorage.getItem('orderData') || '{}'
     const orderData: Order = JSON.parse(orderDataJsonString)
     return orderData
   }

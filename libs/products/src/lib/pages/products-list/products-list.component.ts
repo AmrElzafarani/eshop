@@ -15,6 +15,10 @@ export class ProductsListComponent implements OnInit {
 
   products: Product[] = [];
   categories: Category[] = [];
+  totalProductsCount = 0;
+  productsPerPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [10, 15, 20, 30];
   isCategoryPage!: boolean;
 
   constructor(
@@ -32,14 +36,21 @@ export class ProductsListComponent implements OnInit {
   }
 
   private _getProducts(categoriesFilter?: string[]) {
-    this.productService.getProducts(categoriesFilter).subscribe((products) => {
-      this.products = products
+    this.productService.getProducts(categoriesFilter, this.productsPerPage, this.currentPage).subscribe((products) => {
+      this.products = products.message;
+      this.totalProductsCount = products.total;
+
     })
+  }
+  handlePagination (pageDate: any) {
+    this.currentPage = pageDate.page + 1;
+    this.productsPerPage = pageDate.rows;
+    this._getProducts();
   }
 
   private _getCategories() {
     this.categoryService.getCategories().subscribe((categories) => {
-      this.categories = categories
+      this.categories = categories.message
     })
   }
 
@@ -49,11 +60,8 @@ export class ProductsListComponent implements OnInit {
      .filter((category) => category.checked)
      .map((category) => category._id)
     console.log(selectedCategories)
-    // const selectedCategories = this.categories
-    //   .filter(category => category.checked)
-    //   .map((category) => category.id);
+    
       this._getProducts(selectedCategories)
-    //   console.log(selectedCategories);
   }
 
 }

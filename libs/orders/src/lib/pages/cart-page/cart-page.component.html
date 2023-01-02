@@ -1,11 +1,11 @@
 <div class="cart-page">
-    <div class="grid">
+    <div class="grid justify-content-center">
         <div class="col-8">
             <div>
                 <p-button 
                 label="Continue shopping"
                 icon="pi pi-arrow-left"
-                (onClick)="backToShop()"
+            (onClick)="backToShop()"
                 ></p-button>
             </div>
             <div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="md:col-4 col-6">
             <orders-order-summary></orders-order-summary>
         </div>
     </div>

@@ -1,19 +1,9 @@
-<header>
-    <div class="grid">
-        <div class="col-3">
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="logo">
-            </div>
-        </div>
-        <div class="col-4 search">
-            <products-search></products-search>
-        </div>
-        <div class="col-3 ofsset-1 navigation">
-            <ngshop-nav></ngshop-nav>
-        </div>
-        <div class="col-1 tools">
-            <i class="pi pi-user p-text-secondary" style="font-size: 1.5rem;"></i>
-            <orders-cart-icon></orders-cart-icon>
-        </div>
-    </div>
-</header>
+<p-menubar [model]="navItems">
+    <ng-template pTemplate="start">
+        <img src="assets/images/logo.png" alt="logo" height="40" class="mr-2">
+    </ng-template>
+    <ng-template pTemplate="end">
+        <orders-cart-icon></orders-cart-icon>
+    </ng-template>
+
+</p-menubar>

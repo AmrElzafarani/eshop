@@ -30,8 +30,11 @@
                                 required</small>
                         </div>
                         <div class="field col">
-                            <label for="icon">Brand</label>
-                            <input formControlName="brand" id="brand" type="text" pInputText class="inputfield w-full">
+                            <label for="brand">Brand</label><br>
+                            <p-autoComplete formControlName="brand" [suggestions]="brands" field="name"
+                            (onSelect)="selectedBrand($event)" (completeMethod)="searchByBrandName($event)">
+                            </p-autoComplete>
+
                             <small *ngIf="productForm['brand'].invalid && isSubmitted" class="p-error">Brand
                                 required</small>
                         </div>
@@ -56,10 +59,30 @@
                         </div>
                         <div class="field col">
                             <label for="category">Category</label><br>
-                            <p-dropdown [options]="categories" formControlName="category" optionLabel="name"
-                                [filter]="true" filterBy="name" [showClear]="true" optionValue="_id" placeholder="Select a Category">
-                            </p-dropdown><br>
-                            <small *ngIf="productForm['countInStock'].invalid && isSubmitted" class="p-error">Category
+                            <p-autoComplete formControlName="category" [suggestions]="categories" field="name"
+                                (onSelect)="selectedCategory($event)" (completeMethod)="searchByCategoryName($event)">
+                            </p-autoComplete>
+
+                            <small *ngIf="productForm['category'].invalid && isSubmitted" class="p-error">Category
+                                required</small>
+                        </div>
+
+                        <div class="field col">
+                            <label for="material">Material</label><br>
+                            <p-autoComplete formControlName="material" [suggestions]="materials" field="name"
+                            (onSelect)="selectedMaterial($event)" (completeMethod)="searchByMaterialName($event)"> 
+                            </p-autoComplete>
+
+                            <small *ngIf="productForm['material'].invalid && isSubmitted" class="p-error">Supplier
+                                required</small>
+                        </div>
+                        <div class="field col">
+                            <label for="supplier">Supplier</label><br>
+                            <p-autoComplete formControlName="supplier" [suggestions]="suppliers" field="name"
+                            (onSelect)="selectedSupplier($event)" (completeMethod)="searchBySupplierName($event)">
+                            </p-autoComplete>
+
+                            <small *ngIf="productForm['supplier'].invalid && isSubmitted" class="p-error">Supplier
                                 required</small>
                         </div>
                         <div class="field col">
@@ -86,9 +109,23 @@
                                 <img style="width: 100%" [src]="imageDisplay">
                             </div>
                         </div>
+
+                        <!-- <div class="field col-2">
+                            <label for="main">Gallery Image</label><br>
+                            <input type="file" class="p-inputtext" multiple="true" accept="image/*"
+                                (change)="imagesUpload($event)" />
+                            <small *ngIf="productForm['images'].invalid && isSubmitted" class="p-error">Image
+                                required</small>
+                            <div>
+                                <img style="width: 100%" [src]="imageDisplay">
+                            </div>
+                        </div> -->
                     </div>
                 </form>
             </div>
         </div>
+
+
+
     </p-card>
 </div>

@@ -5,3 +5,8 @@ export interface Category {
     icon: string;
     color: string;
 }
+
+export interface CategoriesResponse {
+    message: Category[];
+    total: number;
+}

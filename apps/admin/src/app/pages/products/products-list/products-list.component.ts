@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product, ProductsService } from '@eshop/products';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -15,6 +15,11 @@ import { takeUntil } from 'rxjs/operators';
 export class ProductsListComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
+  totalProductsCount = 0;
+  productsPerPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [10, 15, 20, 30];
+
   endSubscription$: Subject<any> = new Subject();
 
 
@@ -35,10 +40,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   private _getProducts() {
-    this.productsServeice.getProducts()
+    this.productsServeice.getProducts([],this.productsPerPage, this.currentPage)
       .pipe(takeUntil(this.endSubscription$))
       .subscribe(products => {
-        this.products = products;
+        this.products = products.message;
+        this.totalProductsCount = products.total;
       });
   }
 
@@ -76,6 +82,21 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       key: "positionDialog"
 
     });
+  };
+
+  handlePagination (pageDate: any) {
+    console.log(pageDate);
+
+    this.currentPage = pageDate.page + 1;
+    this.productsPerPage = pageDate.rows;
+    this._getProducts();
   }
+
+  // loadCarsLazy(event: LazyLoadEvent) {
+  //   console.log(event);
+  //   // this.currentPage = event?.first + 1;
+  //   // this.productsPerPage = event.rows;
+  //   this._getProducts();
+  // }
 
 }

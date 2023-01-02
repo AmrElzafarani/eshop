@@ -29,16 +29,30 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CarouselModule } from 'primeng/carousel';
 import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { FieldsetModule } from 'primeng/fieldset';
+import { PaginatorModule } from 'primeng/paginator';
+import {SidebarModule} from 'primeng/sidebar';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+
+
+import {FileUploadModule} from 'primeng/fileupload';
+
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NgxStripeModule } from 'ngx-stripe';
+import { MaterialsListComponent } from './pages/materials/materials-list/materials-list.component';
+import { MaterialsFormComponent } from './pages/materials/materials-form/materials-form.component';
+import { BrandsFormComponent } from './pages/brands/brands-form/brands-form.component';
+import { BrandsListComponent } from './pages/brands/brands-list/brands-list.component';
+import { SuppliersListComponent } from './pages/suppliers/suppliers-list/suppliers-list.component';
+import { SuppliersFormComponent } from './pages/suppliers/suppliers-form/suppliers-form.component';
 
 
 const UX_MODULE = [
@@ -57,7 +71,12 @@ const UX_MODULE = [
   EditorModule,
   TagModule,
   InputMaskModule,
-  FieldsetModule
+  FieldsetModule,
+  CarouselModule,
+  PaginatorModule,
+  FileUploadModule,
+  AutoCompleteModule,
+  SidebarModule
 ];
 
 @NgModule({
@@ -73,7 +92,13 @@ const UX_MODULE = [
     UsersListComponent,
     UsersFormComponent,
     OrdersListComponent,
-    OrdersDetailComponent
+    OrdersDetailComponent,
+    MaterialsListComponent,
+    MaterialsFormComponent,
+    BrandsFormComponent,
+    BrandsListComponent,
+    SuppliersListComponent,
+    SuppliersFormComponent
   ],
   imports: [
     BrowserModule,

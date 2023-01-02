@@ -35,6 +35,9 @@
                     </ng-template>
 
                 </p-table>
+                <p-paginator (onPageChange)="handlePagination($event)" [rows]="totalOrdersCount" [totalRecords]="totalOrdersCount"
+                [rowsPerPageOptions]="pageSizeOptions">>
+              </p-paginator>
             </div>
         </div>
     </p-card>

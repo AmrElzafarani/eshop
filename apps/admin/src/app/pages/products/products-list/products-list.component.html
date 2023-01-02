@@ -14,22 +14,17 @@
         </div>
         <div class="p-grid">
             <div class="class p-col-12">
-                <p-table [value]="products" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
-                    styleClass="p-datatable-gridlines">
+                <p-table [value]="products" styleClass="p-datatable-gridlines">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
-                            </th>
+                            <th>Name</th>
                             <th>Image</th>
-                            <th pSortableColumn="price">price <p-sortIcon field="price"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="stock">Stock <p-sortIcon field="stock"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon>
-                            </th>
-                            <th pSortableColumn="created">Created at <p-sortIcon field="created"></p-sortIcon>
-                            </th>
-                            <th></th>
+                            <th>Price</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Material</th>
+                            <th>Supplier</th>
+                            <th>Actions</th>
                         </tr>
 
                     </ng-template>
@@ -38,10 +33,10 @@
                             <td>{{product.name}}</td>
                             <td><img [src]="product.image" style="width: 100px"></td>
                             <td>{{product.price}}</td>
-                            <td>{{product.countInStock}}</td>
+                            <td>{{product.brand?.name}}</td>
                             <td>{{product.category.name}}</td>
-                            <td>{{product.dataCreated | date: 'short'}}</td>
-
+                            <td>{{product.material?.name}}</td>
+                            <td>{{product.supplier?.name}}</td>
                             <td>
                                 <p-button styleClass="p-button-danger mr-2" icon="pi pi-trash"
                                     (click)="deleteProduct(product._id)">
@@ -56,6 +51,10 @@
                     </ng-template>
 
                 </p-table>
+
+                <p-paginator (onPageChange)="handlePagination($event)" [rows]="totalProductsCount"
+                    [totalRecords]="totalProductsCount" [rowsPerPageOptions]="pageSizeOptions">>
+                </p-paginator>
             </div>
         </div>
     </p-card>

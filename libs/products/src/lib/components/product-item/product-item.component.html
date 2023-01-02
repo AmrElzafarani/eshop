@@ -2,7 +2,7 @@
     <div class="product-item-wrapper">
       <img [routerLink]="'/products/' + product._id" [src]="product.image"  class="image" alt="" />
       <h4 class="name">{{product.name}}</h4>
-      <h5 class="price">{{product.price}}</h5>
+      <h5 *ngIf="isLoggedIn()" class="price">{{product.price}}</h5>
       <p-button
         styleClass="mt-3 add-to-cart"
         label="Add to cart"
@@ -11,4 +11,3 @@
       ></p-button>
     </div>
   </div>
-  

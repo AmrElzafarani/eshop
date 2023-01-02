@@ -1,15 +1,13 @@
-<div class="gallery" *ngIf="hasImages">
-    <div class="main-image">
-      <img [src]="selectedImageUrl" alt="" />
+
+<p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [numVisible]="5">
+  <ng-template pTemplate="item" let-item>
+    <div class="grid grid-nogutter justify-content-center">
+      <img [src]="item" style="width: 100%;"/>
     </div>
-    <div class="images">
-      <ul>
-        <li
-          *ngFor="let imageUrl of images"
-          (click)="changeSelectedImage(imageUrl)"
-          [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }"
-        ></li>
-      </ul>
+  </ng-template>
+  <ng-template pTemplate="thumbnail" let-image>
+    <div class="grid grid-nogutter justify-content-center">
+      <img [src]="image" />
     </div>
-  </div>
-  
+  </ng-template>
+</p-galleria>

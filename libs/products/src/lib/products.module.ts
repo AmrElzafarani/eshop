@@ -10,8 +10,14 @@ import { ProductsListComponent } from './pages/products-list/products-list.compo
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
-import {RatingModule} from 'primeng/rating';
-import {InputNumberModule} from 'primeng/inputnumber';
+import { RatingModule } from 'primeng/rating';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CarouselModule } from 'primeng/carousel';
+import { PaginatorModule } from 'primeng/paginator';
+
+
+
+
 import { UiModule } from '@eshop/ui';
 
 
@@ -40,6 +46,8 @@ const routes: Routes = [
     FormsModule,
     RatingModule,
     InputNumberModule,
+    CarouselModule,
+    PaginatorModule,
     UiModule
   ],
   declarations: [
@@ -52,6 +60,11 @@ const routes: Routes = [
   ],
   exports: [
     ProductsSearchComponent,
-    CategoriesBannerComponent, ProductItemComponent, FeaturedProductsComponent, ProductsListComponent, ProductPageComponent]
+    CategoriesBannerComponent,
+    ProductItemComponent,
+    FeaturedProductsComponent,
+    ProductsListComponent,
+    ProductPageComponent
+  ]
 })
 export class ProductsModule { }

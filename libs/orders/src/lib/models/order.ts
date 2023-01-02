@@ -1,4 +1,4 @@
-import { User } from "@eshop/users";
+// import { User } from "@eshop/users";
 import { OrderItem } from "./order-item";
 
 export class Order {
@@ -14,5 +14,9 @@ export class Order {
     totalPrice?: string;
     user?: any;
     dateOrdered?: string;
+}
 
+export interface OrdersResponse {
+    message: Order[];
+    total: number;
 }

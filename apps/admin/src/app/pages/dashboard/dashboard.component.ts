@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     ])
     .pipe(takeUntil(this.endSubscription$))
     .subscribe((values) => {
+      console.log(values)
       this.statistics = values;
     });
   }

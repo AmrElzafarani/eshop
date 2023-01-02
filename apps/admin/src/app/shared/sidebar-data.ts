@@ -29,5 +29,17 @@ export const sidebarData = [
         name: 'Users'
 
     },
+    {
+        path: '/brands',
+        class: 'pi pi-users',
+        name: 'Brands'
+
+    },
+    {
+        path: '/materials',
+        class: 'pi pi-users',
+        name: 'Materials'
+
+    },
    
 ]

@@ -7,7 +7,6 @@
                     <div class="p-toolbar-group-left">
                         <p-button styleClass="p-button-success" label="New" icon="pi pi-plus" routerLink="form">
                         </p-button>
-
                     </div>
                 </p-toolbar>
             </div>
@@ -21,7 +20,7 @@
                             </th>
                             <th>Icon</th>
                             <th>Color</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
 
                     </ng-template>
@@ -47,6 +46,9 @@
                     </ng-template>
 
                 </p-table>
+                <p-paginator (onPageChange)="handlePagination($event)" [rows]="totalCategoriesCount"
+                    [totalRecords]="totalCategoriesCount" [rowsPerPageOptions]="pageSizeOptions">>
+                </p-paginator>
             </div>
         </div>
     </p-card>

@@ -8,6 +8,10 @@ import { User, UsersService } from '@eshop/users';
 export class UsersListComponent implements OnInit {
 
   users: User[] = [];
+  totalUsers = 0;
+  usersPerPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [1, 2, 5, 10];
 
   constructor(
     private usersService: UsersService
@@ -27,9 +31,16 @@ export class UsersListComponent implements OnInit {
   }
 
   private _getUsers() {
-    this.usersService.getUsers().subscribe((users) => {
-      this.users = users
+    this.usersService.getUsers(this.usersPerPage, this.currentPage).subscribe((users) => {
+      this.users = users.message;
+      this.totalUsers = users.total
     })
+  }
+
+  handlePagination(pageData:any) {
+    this.currentPage = pageData.page + 1
+    this.usersPerPage = pageData.rows
+    this._getUsers();
   }
 
 }

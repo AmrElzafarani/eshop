@@ -14,6 +14,7 @@ export class ProductPageComponent implements OnInit {
   product!: Product;
   quantity = 1;
 
+ 
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
@@ -26,10 +27,12 @@ export class ProductPageComponent implements OnInit {
         this._getProduct(params['productid'])
       }
     })
+
   }
 
   private _getProduct(productId: string) {
     this.productService.getproductById(productId).subscribe(product => {
+      console.log(product)
       this.product = product
     })
 
